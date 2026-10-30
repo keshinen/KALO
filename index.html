@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Hahahaha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one centered column. Stage 1 is a calm fake launch page, stage 2 is a full-bleed punchline. */
+  :root {
+    --bg: #f3f5f7;
+    --fg: #14181d;
+    --muted: #5b6672;
+    --line: #d5dbe1;
+    --accent: #2f5cff;
+    --pop-bg: #ffd60a;
+    --pop-fg: #14181d;
+    --display: "Bowlby One", "Arial Black", Impact, sans-serif;
+    --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1216; --fg: #eef2f5; --muted: #93a0ad; --line: #26303a;
+      --accent: #7b98ff; --pop-bg: #ffd60a; --pop-fg: #14181d;
+      color-scheme: dark;
+    }
+  }
+
+  [hidden] { display: none !important; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+    padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    transition: background 0.15s linear, color 0.15s linear;
+  }
+  body.popped { background: var(--pop-bg); color: var(--pop-fg); }
+
+  main {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding-block: 32px;
+  }
+  .stage { width: 100%; max-width: 560px; min-width: 0; }
+  #punch { max-width: 900px; text-align: center; }
+
+  /* Stage 1: fake launch page */
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 28px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: blink 1.2s steps(2, jump-none) infinite; }
+  h1.setup {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: clamp(2rem, 7vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .lede { color: var(--muted); margin: 0 0 36px; max-width: 46ch; }
+
+  .bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .fill { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width 0.25s ease-out; }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .meta span { min-width: 0; }
+  #status { overflow-wrap: anywhere; }
+
+  /* Stage 2: punchline */
+  .ha {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 13.5vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+    overflow-wrap: anywhere;
+  }
+  .ha span { display: inline-block; animation: wobble 0.5s ease-in-out infinite alternate; }
+  .ha span:nth-child(odd) { animation-delay: -0.25s; }
+  .ha span:nth-child(3n) { animation-duration: 0.4s; }
+  .sub {
+    font-size: clamp(1.15rem, 3.6vw, 1.75rem);
+    font-weight: 500;
+    margin: 0 auto 36px;
+    max-width: 30ch;
+    text-wrap: balance;
+  }
+  .receipt {
+    font-family: var(--mono);
+    font-size: 13px;
+    margin: 0 auto 28px;
+    padding-block: 14px;
+    border-top: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    max-width: 420px;
+    display: grid;
+    gap: 4px;
+    text-align: left;
+    font-variant-numeric: tabular-nums;
+  }
+  .receipt div { display: flex; justify-content: space-between; gap: 16px; }
+  .receipt b { font-weight: 500; }
+  button {
+    font: 700 15px var(--body);
+    color: var(--pop-bg);
+    background: var(--pop-fg);
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 26px;
+    cursor: pointer;
+  }
+  button:hover { transform: translateY(-1px); }
+  button:focus-visible { outline: 3px solid var(--pop-fg); outline-offset: 3px; }
+
+  .shake { animation: shake 0.45s linear; }
+
+  @keyframes blink { 50% { opacity: 0.15; } }
+  @keyframes wobble { from { transform: rotate(-4deg) translateY(2px); } to { transform: rotate(4deg) translateY(-4px); } }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ha span, .dot, .shake { animation: none; }
+    body, .fill { transition: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="stage" id="setup" aria-live="polite">
+    <p class="tag"><i class="dot"></i> Pre-launch build 0.0.1</p>
+    <h1 class="setup">Our new website is almost ready.</h1>
+    <p class="lede">We are putting the finishing touches on something you are going to love. Please keep this tab open.</p>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+      <div class="fill" id="fill"></div>
+    </div>
+    <div class="meta"><span id="status">Starting up</span><span id="pct">0%</span></div>
+  </section>
+
+  <section class="stage" id="punch" hidden aria-live="assertive">
+    <h2 class="ha" id="ha" aria-label="Hahahahaha"></h2>
+    <p class="sub">You really thought we had time to make a website.</p>
+    <div class="receipt" aria-label="Build report">
+      <div><span>Pages built</span><b>0</b></div>
+      <div><span>Lines of code</span><b>0</b></div>
+      <div><span>Effort spent on you</span><b>maximum</b></div>
+    </div>
+    <button type="button" id="again">Watch it again</button>
+  </section>
+</main>
+
+<script>
+(function () {
+  var setup = document.getElementById("setup");
+  var punch = document.getElementById("punch");
+  var fill = document.getElementById("fill");
+  var bar = document.getElementById("bar");
+  var pct = document.getElementById("pct");
+  var status = document.getElementById("status");
+  var ha = document.getElementById("ha");
+  var again = document.getElementById("again");
+  var timers = [];
+
+  // build the wobbling HAHAHAHAHA once, one span per letter
+  "HAHAHAHAHA".split("").forEach(function (ch) {
+    var s = document.createElement("span");
+    s.textContent = ch;
+    ha.appendChild(s);
+  });
+
+  var steps = [
+    { at: 600,  to: 12, msg: "Compiling pixels" },
+    { at: 1500, to: 31, msg: "Aligning the divs" },
+    { at: 2500, to: 47, msg: "Asking the intern" },
+    { at: 3500, to: 68, msg: "Making the logo bigger" },
+    { at: 4500, to: 84, msg: "Adding a cookie banner" },
+    { at: 5500, to: 96, msg: "Nearly there" },
+    { at: 6600, to: 99, msg: "Almost done" }
+  ];
+
+  function setProgress(n, msg) {
+    fill.style.width = n + "%";
+    pct.textContent = n + "%";
+    bar.setAttribute("aria-valuenow", String(n));
+    if (msg) status.textContent = msg;
+  }
+
+  function later(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+  function reveal() {
+    setup.classList.add("shake");
+    later(450, function () {
+      setup.classList.remove("shake");
+      setup.hidden = true;
+      punch.hidden = false;
+      document.body.classList.add("popped");
+    });
+  }
+
+  function run() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    punch.hidden = true;
+    setup.hidden = false;
+    document.body.classList.remove("popped");
+    setProgress(0, "Starting up");
+    steps.forEach(function (s) {
+      later(s.at, function () { setProgress(s.to, s.msg); });
+    });
+    // sit at 99% for a beat so it feels real, then pull the rug
+    later(9000, reveal);
+  }
+
+  again.addEventListener("click", run);
+  run();
+})();
+</script>
+</body>
+</html>
